@@ -4,7 +4,19 @@
 
 作为一个终极懒人，平常刷pwn题的各种模式切换显示十分繁琐，于是就诞生了这个小小的python库
 
-用一个示例代码说明一下功能
+## 0x01 安装pwnpy库
+
+安装教程
+
+```bash
+git clone https://github.com/p0ach1l/mypwnpy.git
+cd mypwnpy
+pip install -e .
+```
+
+## 0x02功能介绍 
+
+用一个示例代码说明一下功能	
 
 ```python
 from pwn import *
@@ -27,9 +39,7 @@ p.sendline(b'\x00')
 p.interactive()
 ```
 
-
-
-## 0x01 连接模块
+###  连接模块‘
 
 1. 默认本地跑脚本
 
@@ -38,6 +48,8 @@ p.interactive()
    ```
 
 2. de调试模式
+
+   我的设置了分屏，所有需要tmux，可以根据需求修改
 
    ```python
    python pwn10.py de
@@ -53,7 +65,7 @@ p.interactive()
 
 在拿到一个题只需要完善一下对应的filename、url就能快速刷题，丝滑切换各种模式
 
-## 0x02 初始化context
+### 初始化context
 
 通过调用set_context方法可以实现初始化set_context，可以根据个人习惯修改
 
