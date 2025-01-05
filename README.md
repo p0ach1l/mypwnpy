@@ -34,6 +34,8 @@ gdbscript = '''
 set_context()
 p = pr(url = url , filename = filename , gdbscript = gdbscript)
 elf = ELF(filename)
+leak_addr = 0x00000000004008CB
+lss("leak_addr")
 p.sendline(b'\x00')
 
 p.interactive()
@@ -81,3 +83,10 @@ ef set_context(log_level='debug', arch='amd64', os='linux', endian='little', tim
     )
 ```
 
+### 高亮变量打印
+
+```python
+lss("addr")
+```
+
+![image-20250105171718098](https://cdn.jsdelivr.net/gh/p0ach1l/Picture@master/test/image-20250105171718098.png)
