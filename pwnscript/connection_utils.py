@@ -14,7 +14,7 @@ def pr(url=None, filename=None,  gdbscript=None , framepath = None):
         match = re.match(r'([^:\s]+)(?::(\d+)|\s+(\d+))?', url)
         if not match:
             log.error(f"Invalid URL format: {url}")
-        hostname, port = (match.group(1), match.group(2) or match.group(3)) if match else (None, None)
+        host, port = (match.group(1), match.group(2) or match.group(3)) if match else (None, None)
         p = remote(host, port)
 
     else:
