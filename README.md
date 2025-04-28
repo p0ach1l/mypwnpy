@@ -9,8 +9,8 @@
 安装教程
 
 ```bash
-git clone https://github.com/p0ach1l/mypwnpy.git
-cd mypwnpy
+git clone https://github.com/p0ach1l/pwnscript.git
+cd pwnscript
 pip install -e .
 ```
 
