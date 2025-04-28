@@ -1,28 +1,39 @@
 import sys
 import re
-from pwn import remote, process ,gdb
+from pwn import *
 
-def pr(url=None, filename=None, debug=False , gdbscript=None):
-    remote_mode = False
-    local_mode = False
+def pr(url=None, filename=None,  gdbscript=None):
+    p = None
 
-    if len(sys.argv) > 1:
-        if sys.argv[1] == 're':  # 远程连接
-            remote_mode = True
-        elif sys.argv[1] == 'de':  # 本地调试
-            local_mode = True
-            debug = True
+    remote_mode = len(sys.argv) > 1 and sys.argv[1] == 're'
+    debug_mode = len(sys.argv) > 1 and sys.argv[1] == 'de'
 
-    if remote_mode and url:
+    if remote_mode:
+        if not url:
+            log.error("Remote mode requires a URL (format: host:port)")
         match = re.match(r'([^:\s]+)(?::(\d+)|\s+(\d+))?', url)
+        if not match:
+            log.error(f"Invalid URL format: {url}")
         hostname, port = (match.group(1), match.group(2) or match.group(3)) if match else (None, None)
-        p = remote(hostname, port)
-    else:
-        p = process(filename)
+        p = remote(host, port)
 
-    if debug:
-        if isinstance(p, process):
-            gdb.attach(p, gdbscript=gdbscript)
-            print("GDB attached successfully")
+    else:
+        if not filename:
+            log.error("Local mode requires a filename")
+        
+        arch = context.arch
+
+        qemu_archs = ['arm', 'aarch64', 'mips', 'mipsel']
+        if arch in qemu_archs:
+            args = ['qemu-' + arch + '-static']
+            if debug_mode:
+                args += ['-g', '1234']
+            args.append(filename)
+            p = process(args)
+        else:
+            p = process(filename)
+            if debug_mode:
+                gdb.attach(p, gdbscript=gdbscript)
+                log.info("GDB attached successfully")
 
     return p
