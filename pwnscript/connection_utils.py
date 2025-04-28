@@ -2,7 +2,11 @@ import sys
 import re
 from pwn import *
 
+<<<<<<< HEAD
 def pr(url=None, filename=None,  gdbscript=None , framepath = None):
+=======
+def pr(url=None, filename=None,  gdbscript=None):
+>>>>>>> 75c761ea55ebc6f7c8cd0dd1c8ac47f98dbd7c3c
     p = None
 
     remote_mode = len(sys.argv) > 1 and sys.argv[1] == 're'
@@ -25,7 +29,11 @@ def pr(url=None, filename=None,  gdbscript=None , framepath = None):
 
         qemu_archs = ['arm', 'aarch64', 'mips', 'mipsel']
         if arch in qemu_archs:
+<<<<<<< HEAD
             args = ['qemu-' + arch , '-L' , framepath]
+=======
+            args = ['qemu-' + arch + '-static']
+>>>>>>> 75c761ea55ebc6f7c8cd0dd1c8ac47f98dbd7c3c
             if debug_mode:
                 args += ['-g', '1234']
             args.append(filename)
