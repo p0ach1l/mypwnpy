@@ -4,7 +4,7 @@
 
 作为一个终极懒人，平常刷pwn题的各种模式切换显示十分繁琐，于是就诞生了这个小小的python库
 
-## 0x01 安装pwnpy库
+## 0x01 安装pwnscript库
 
 安装教程
 
@@ -22,23 +22,21 @@ pip install -e .
 from pwn import *
 from ctypes import *
 from LibcSearcher import *
-from pwnpy import *
-import sys
+from pwnscript import *
 
 
-filename = './pwn10'
+filename = 
 url = ''
 gdbscript = '''
-  b * 0x00000000004008CB
+  b * main
 '''
-set_context()
-p = pr(url = url , filename = filename , gdbscript = gdbscript)
+set_context(log_level='debug', arch='amd64', os='linux', endian='little', timeout=5)
+p = pr(url=url , filename=filename , gdbscript=gdbscript , framepath='')
 elf = ELF(filename)
-leak_addr = 0x00000000004008CB
-lss("leak_addr")
-p.sendline(b'\x00')
+
 
 p.interactive()
+
 ```
 
 ###  连接模块
